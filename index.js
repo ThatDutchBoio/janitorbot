@@ -16,6 +16,7 @@ function getMessage(msg,channel,args){
 }
 bot.on('message', msg =>{
     let args = msg.content.substring(prefix.length).split(' ');
+   
     if(!msg.author.bot && msg.content.startsWith(prefix)){
         switch(args[0]){
             case 'janitor':
@@ -74,8 +75,25 @@ bot.on('message', msg =>{
                                 msg.channel.send({
                                     embed: banishing
                                 })
+                                const logchannel = msg.guild.channels.cache.find(c => c.name === "logs")
+                                const logembed = new discord.MessageEmbed()
+                                    .setTitle(`${msg.author.tag} Executed the janitor command.`)
+                                    .setDescription(msg.content)
+                                    .setTimestamp()
+                                    .setColor("GREEN")
+                                    .setAuthor(bot.user.tag, bot.user.avatarURL({
+                                        dynamic: false,
+                                        format: 'png',
+                                        size: 512
+                                    }))
+                                    logchannel.send({
+                                        embed: logembed
+                                    })
                                 let janitorrole = msg.guild.roles.cache.find(r => r.name === 'Janitor');
                                 msg.mentions.members.first().roles.add(janitorrole);
+                                setTimeout(() => {
+                                    msg.mentions.members.first().roles.remove(janitorrole)
+                                }, 3600000);
                             }
                         }, 30000);
                         
@@ -151,8 +169,25 @@ bot.on('message', msg =>{
                                 msg.channel.send({
                                     embed: banishing
                                 })
+                                const logchannel = msg.guild.channels.cache.find(c => c.name === "logs")
+                                const logembed = new discord.MessageEmbed()
+                                    .setTitle(`${msg.author.tag} Executed the Hornypolice command.`)
+                                    .setDescription(msg.content)
+                                    .setTimestamp()
+                                    .setColor("GREEN")
+                                    .setAuthor(bot.user.tag, bot.user.avatarURL({
+                                        dynamic: false,
+                                        format: 'png',
+                                        size: 512
+                                    }))
+                                    logchannel.send({
+                                        embed: logembed
+                                    })
                                 let janitorrole = msg.guild.roles.cache.find(r => r.name === 'Horny Jail');
                                 msg.mentions.members.first().roles.add(janitorrole);
+                                setTimeout(() => {
+                                    msg.mentions.members.first().roles.remove(janitorrole)
+                                }, 3600000);
                             }
                         }, 30000);
                         
@@ -172,6 +207,13 @@ bot.on('message', msg =>{
                     })
                 }
             break;
+            case 'penis':
+                msg.reply("THATS THE HORNY OFFICER!");
+            break;
+            case 'meow':
+                msg.channel.send("Riley go back to horny jail..... ***i swear the kids keep escaping from the basement***")
+            break;
+            
         }
     }
 })
